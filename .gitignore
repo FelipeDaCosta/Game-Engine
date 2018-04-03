@@ -1,0 +1,8 @@
+assets/audio/*
+assets/font/*
+assets/img/*
+assets/map/*
+makefile
+JOGO
+bin
+dep

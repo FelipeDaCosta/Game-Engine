@@ -2,11 +2,11 @@
 #include "../include/Sprite.h"
 #include "../include/Game.h"
 
-Sprite::Sprite() {
+Sprite::Sprite(GameObject& associated) : Component(associated) {
     texture = nullptr;
 }
 
-Sprite::Sprite(std::string file) {
+Sprite::Sprite(GameObject& associated, std::string file) : Component(associated) {
     texture = nullptr;
     Open(file);
 }
@@ -34,6 +34,8 @@ void Sprite::Open(std::string file) {
         std::cout << "Erro no SDL_QueryTexture: " << SDL_GetError() << std::endl;
     }
     SetClip(0, 0, width, height);
+    associated.box.w = width;
+    associated.box.h = height;
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -43,15 +45,22 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y) {
+void Sprite::Render() {
     SDL_Rect dstRect;
-    dstRect.x = x;
-    dstRect.y = y;
-    dstRect.w = clipRect.w;
-    dstRect.h = clipRect.h;
+    dstRect.x = associated.box.x;
+    dstRect.y = associated.box.y;
+    dstRect.w = associated.box.w;
+    dstRect.h = associated.box.h;
     if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect) != 0) {
         std::cout << "Erro no SDL_RenderCopy: " << SDL_GetError() << std::endl;
     }
+}
+
+bool Sprite::Is(std::string type) {
+    return type == "Sprite";
+}
+
+void Sprite::Update(float dt) {
 }
 
 int Sprite::GetWidth() {

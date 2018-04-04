@@ -7,7 +7,7 @@
 #include "State.h"
 #define INCLUDE_SDL
 #include "SDL_include.h"
-
+#include <ctime>
 
 class Game {
     private:

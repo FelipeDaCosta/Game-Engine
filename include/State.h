@@ -2,8 +2,9 @@
 #define STATE_H
 
 #include <memory>
-
+#include <cstdlib>
 #include "Vec2.h"
+#include "Rect.h"
 #include "Sprite.h"
 #include "Music.h"
 #include "Face.h"

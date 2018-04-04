@@ -12,7 +12,6 @@ Sprite::Sprite(GameObject& associated, std::string file) : Component(associated)
 }
 
 Sprite::~Sprite() {
-    std::cout << "Chamando destructor" << std::endl;
     if(texture != nullptr) {
         SDL_DestroyTexture(texture);
     }

@@ -18,6 +18,8 @@ class Sound : public Component {
         void Open(std::string file);
         bool IsOpen();
 
+        bool IsPlaying();
+
         void Update(float dt);
         void Render();
         bool Is(std::string type);

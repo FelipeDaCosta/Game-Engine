@@ -2,8 +2,10 @@
 #define GAMEOBJECT_H
 
 #include <vector>
+#include <memory>
 #include "Component.h"
 #include "Rect.h"
+#include "Sound.h"
 
 class GameObject {
     public:

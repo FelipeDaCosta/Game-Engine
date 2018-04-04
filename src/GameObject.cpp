@@ -1,4 +1,5 @@
 #include "../include/GameObject.h"
+#include <iostream>
 
 GameObject::GameObject() {
     isDead = false;
@@ -28,11 +29,14 @@ bool GameObject::IsDead() {
 }
 
 void GameObject::RequestDelete() {
-    isDead = true;
+    Sound* finalSound = (Sound*) GetComponent("Sound");
+    if(finalSound != nullptr && !finalSound->IsPlaying()) {
+        isDead = true; // Play final sound
+    }
 }
 
 void GameObject::AddComponent(Component * cpt) {
-    components.push_back(cpt);
+    components.emplace_back(cpt);
 }
 
 void GameObject::RemoveComponent(Component * cpt) {

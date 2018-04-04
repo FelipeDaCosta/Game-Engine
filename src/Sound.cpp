@@ -26,6 +26,10 @@ void Sound::Open(std::string file) {
     }
 }
 
+bool Sound::IsPlaying() {
+    return Mix_Playing(channel);
+}
+
 void Sound::Update(float dt) {
 }
 

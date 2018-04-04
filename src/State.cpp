@@ -42,7 +42,6 @@ void State::Input() {
 				// ao usar get(), violamos esse princípio e estamos menos seguros.
 				// Esse código, assim como a classe Face, é provisório. Futuramente, para
 				// chamar funções de GameObjects, use objectArray[i]->função() direto.
-
 				if(go->box.Contains((float)mouseX, (float)mouseY ) ) {
 					Face* face = (Face*)go->GetComponent( "Face" );
 					if ( nullptr != face ) {
@@ -90,8 +89,10 @@ void State::Render() {
 
 void State::AddObject(int mouseX, int mouseY) {
     GameObject* go = new GameObject();
+	go->box.SetPosition((float) mouseX,(float) mouseY);
     go->AddComponent(new Sprite(*go, "./assets/img/penguinface.png"));
     go->AddComponent(new Sound(*go, "./assets/audio/boom.wav"));
+	go->AddComponent(new Face(*go));
     objectArray.emplace_back(go);
 }
 

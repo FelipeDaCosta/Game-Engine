@@ -12,6 +12,7 @@ class Rect {
         float h;
         Rect(); // Inicializa tudo 0
         Rect(float x, float y, float w, float h);
+        void SetPosition(float x, float y);
         bool Contains(float x, float y);
     private:
 };

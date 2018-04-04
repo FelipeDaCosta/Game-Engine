@@ -12,6 +12,7 @@ Game& Game::GetInstance() {
 }
 
 Game::Game(std::string title, int width, int height) {
+    srand(time(NULL));
     if(instance != nullptr) {
         std::cout << "Tentativa de criar segunda classe Game" << std::endl;
         exit(-1);

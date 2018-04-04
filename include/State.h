@@ -10,7 +10,6 @@
 
 class State {
     private:
-        Sprite bg;
         Music music;
         bool quitRequested;
         void Input();

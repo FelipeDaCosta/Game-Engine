@@ -2,8 +2,11 @@
 
 const float PI = 3.141592643589;
 
-State::State() : bg(*(new GameObject()), "./assets/img/ocean.jpg"), music("./assets/audio/stageState.ogg") {
-    quitRequested = false;
+State::State() : music("./assets/audio/stageState.ogg"){
+	GameObject *go = new GameObject();
+	go->AddComponent(new Sprite(*go, "./assets/img/ocean.jpg"));
+	objectArray.emplace_back(go);
+	quitRequested = false;
     music.Play(-1);
 }
 

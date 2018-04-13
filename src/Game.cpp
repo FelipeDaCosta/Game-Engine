@@ -80,4 +80,5 @@ void Game::Run() {
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
+    Resources::ClearImages();
 }

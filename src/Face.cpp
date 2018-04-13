@@ -6,15 +6,17 @@ Face::Face(GameObject& associated) : Component(associated) {
 }
 
 void Face::Damage(int damage) {
-    hitpoints -= damage;
-    if(hitpoints <= 0) {
-        Sound *deathSound = (Sound*) associated.GetComponent("Sound");
-        if(deathSound != nullptr) {
-            deathSound->Play(1);
+    if(hitpoints > 0) {    
+        hitpoints -= damage;
+        if(hitpoints <= 0) {
+            Sound *deathSound = (Sound*) associated.GetComponent("Sound");
+            if(deathSound != nullptr) {
+                deathSound->Play(1);
+            }
+            associated.RequestDelete(); 
         }
-        associated.RequestDelete(); 
+        std::cout << "Tomou dano de " << damage << " vida: " << hitpoints << std::endl;
     }
-    std::cout << "Tomou dano de " << damage << " vida: " << hitpoints << std::endl;
 }
 
 void Face::Update(float dt) {

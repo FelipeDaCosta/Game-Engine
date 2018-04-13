@@ -4,10 +4,10 @@
 #include <iostream>
 #include <string> 
 #include <cstdlib>
-#include "State.h"
 #define INCLUDE_SDL
 #include "SDL_include.h"
 #include <ctime>
+#include "State.h"
 
 class Game {
     private:

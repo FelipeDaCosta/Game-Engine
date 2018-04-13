@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "Music.h"
 #include "Face.h"
+#include "TileSet.h"
+#include "TileMap.h"
 
 class State {
     private:

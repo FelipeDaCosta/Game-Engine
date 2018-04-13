@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "Sound.h"
 #include "GameObject.h"
+#include "Resources.h"
 
 class Sprite : public Component{
     private:
@@ -22,6 +23,7 @@ class Sprite : public Component{
         void Open(std::string file);
         void SetClip(int x, int y, int w, int h);
         void Render();
+        void RenderToPosition(float x, float y);
         int GetWidth();
         int GetHeight();
         bool IsOpen();

@@ -12,22 +12,10 @@ Sprite::Sprite(GameObject& associated, std::string file) : Component(associated)
 }
 
 Sprite::~Sprite() {
-    if(texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    }
 }
 
 void Sprite::Open(std::string file) {
-    if(texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    }
-
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-    if(texture == nullptr) {
-        std::cout << "Erro no IMG_LoadTexture ao tentar carregar " << file 
-                  << ": " << SDL_GetError() << std::endl;
-        exit(-1);
-    }
+    texture = Resources::GetImage(file);
     // Seta width e height
     if(SDL_QueryTexture(texture, nullptr, nullptr, &width, &height) != 0) {
         std::cout << "Erro no SDL_QueryTexture: " << SDL_GetError() << std::endl;
@@ -44,15 +32,19 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.h = h;
 }
 
-void Sprite::Render() {
+void Sprite::RenderToPosition(float x, float y) {
     SDL_Rect dstRect;
-    dstRect.x = associated.box.x;
-    dstRect.y = associated.box.y;
-    dstRect.w = associated.box.w;
-    dstRect.h = associated.box.h;
+    dstRect.x = x;
+    dstRect.y = y;
+    dstRect.w = width;
+    dstRect.h = height;
     if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect) != 0) {
         std::cout << "Erro no SDL_RenderCopy: " << SDL_GetError() << std::endl;
     }
+}
+
+void Sprite::Render() {
+    RenderToPosition(associated.box.x, associated.box.y);
 }
 
 bool Sprite::Is(std::string type) {

@@ -3,9 +3,17 @@
 const float PI = 3.141592643589;
 
 State::State() : music("./assets/audio/stageState.ogg"){
-	GameObject *go = new GameObject();
-	go->AddComponent(new Sprite(*go, "./assets/img/ocean.jpg"));
-	objectArray.emplace_back(go);
+	GameObject *go_sprite = new GameObject();
+	go_sprite->AddComponent(new Sprite(*go_sprite, "./assets/img/ocean.jpg"));
+	objectArray.emplace_back(go_sprite);
+
+	GameObject *go_map = new GameObject();
+	TileSet *tileSet = new TileSet(*go_map, 64, 64, "./assets/img/tileset.png"); 
+	TileMap *tileMap = new TileMap(*go_map, "./assets/map/tileMap.txt", tileSet);
+	go_map->AddComponent(tileMap);
+	go_map->box.SetPosition(0, 0);
+	objectArray.emplace_back(go_map);
+
 	quitRequested = false;
     music.Play(-1);
 }

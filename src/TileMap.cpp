@@ -1,5 +1,7 @@
 #include "../include/TileMap.h"
 
+bool run_once = true;
+
 TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet) : Component(associated) {
     Load(file);
     this->tileSet = tileSet;
@@ -42,17 +44,22 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
+    float x, y;
     for(int i = 0; i < GetWidth(); i++) {
         for(int j = 0; j < GetHeight(); j++) {
-            float x, y;
-            x = i*tileSet->GetTileWidth() - cameraX;
-            y = j*tileSet->GetTileHeight() - cameraY;
+            x = i*tileSet->GetTileWidth();
+            y = j*tileSet->GetTileHeight();
             int& index = At(i, j, layer);
+            if(!run_once)
+                std::cout <<  index << ", ";
             if(index != -1) {
-                tileSet->RenderTile(At(i, j, layer), x, y);
+                tileSet->RenderTile(index, x, y);
             }
         }
+        if(!run_once)
+            std::cout << std::endl;
     }
+    run_once = true;
 }
 
 void TileMap::Render() {

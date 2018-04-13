@@ -13,7 +13,7 @@ TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::str
 
 void TileSet::RenderTile(unsigned index, float x, float y) {
     int row, column;
-    if(index < rows*columns) { 
+    if(index < (unsigned)rows*columns) { 
         row = index/columns;
         column = index%columns;
     }

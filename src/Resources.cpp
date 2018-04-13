@@ -20,6 +20,7 @@ SDL_Texture* Resources::GetImage(std::string file) {
             exit(-1);
         }
         imageTable.insert({file, returnTexture});
+        std::cout << "Carregou a textura " << file << std::endl;
     } else {
         returnTexture = (*imageTable.find(file)).second;
     }
@@ -45,6 +46,7 @@ Mix_Music* Resources::GetMusic(std::string file) {
             exit(-1);
         }
         musicTable.insert({file, returnMusic});
+        std::cout << "Carregou a musica " << file << std::endl;
     } else {
         returnMusic = (*musicTable.find(file)).second;
     }
@@ -66,8 +68,9 @@ Mix_Chunk* Resources::GetSound(std::string file) {
         returnChunk = Mix_LoadWAV(file.c_str());
         if(returnChunk == nullptr) {
         std::cout << "Erro ao abrir arquivo " << file << ": " << SDL_GetError() << std::endl;
-    }
+        }
         soundTable.insert({file, returnChunk});
+        std::cout << "Carregou o chunk " << file << std::endl;
     } else {
         returnChunk = (*soundTable.find(file)).second;
     }

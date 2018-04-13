@@ -6,6 +6,7 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 #include "Component.h"
+#include "Resources.h"
 
 class Sound : public Component {
     public:

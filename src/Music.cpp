@@ -23,10 +23,5 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(std::string file) {
-    music = Mix_LoadMUS(file.c_str());
-    if(music == nullptr) {
-        std::cout << "Erro no MixLoadMUS ao tentar carregar " << file
-                  << ": " << SDL_GetError() << std::endl;
-        exit(-1);
-    }
+    music = Resources::GetMusic(file);
 }

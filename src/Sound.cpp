@@ -20,10 +20,7 @@ void Sound::Stop() {
 }
 
 void Sound::Open(std::string file) {
-    chunk = Mix_LoadWAV(file.c_str());
-    if(chunk == nullptr) {
-        std::cout << "Erro ao abrir arquivo " << file << ": " << SDL_GetError() << std::endl;
-    }
+    chunk = Resources::GetSound(file);
 }
 
 bool Sound::IsPlaying() {
@@ -43,7 +40,6 @@ bool Sound::Is(std::string type) {
 Sound::~Sound() {
     if(chunk != nullptr) {
         Mix_HaltChannel(channel);
-        Mix_FreeChunk(chunk);
     }
 }
 

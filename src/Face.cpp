@@ -20,6 +20,13 @@ void Face::Damage(int damage) {
 }
 
 void Face::Update(float dt) {
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        int mouseX = InputManager::GetInstance().GetMouseX();
+        int mouseY = InputManager::GetInstance().GetMouseY();
+        if(associated.box.Contains((float) mouseX, (float) mouseY)) {
+            this->Damage(std::rand() % 10 + 10);
+        }
+    }
     if(hitpoints <= 0) {
         associated.RequestDelete(); // Caso toque som de morte tem que deletar aqui
     }

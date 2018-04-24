@@ -80,7 +80,15 @@ void State::LoadAssets() {
 }
 
 void State::Update(float dt) {
-    Input();
+	if(quitRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested()) {
+		quitRequested = true;
+	}
+	if(InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+		int mouseX = InputManager::GetInstance().GetMouseX();
+		int mouseY = InputManager::GetInstance().GetMouseY();
+		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ).Sum(Vec2(mouseX, mouseY));
+		AddObject((int)objPos.x, (int)objPos.y);
+	}
     for(unsigned int i = 0; i < objectArray.size(); i++) {
         objectArray[i]->Update(dt);
         if(objectArray[i]->IsDead()) {

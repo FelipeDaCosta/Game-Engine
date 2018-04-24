@@ -36,8 +36,8 @@ void Sprite::RenderToPosition(float x, float y) {
     SDL_Rect dstRect;
     dstRect.x = x;
     dstRect.y = y;
-    dstRect.w = width;
-    dstRect.h = height;
+    dstRect.w = clipRect.w;
+    dstRect.h = clipRect.h;
     if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect) != 0) {
         std::cout << "Erro no SDL_RenderCopy: " << SDL_GetError() << std::endl;
     }

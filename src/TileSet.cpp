@@ -21,7 +21,7 @@ void TileSet::RenderTile(unsigned index, float x, float y) {
         std::cout << "Falha ao renderizar tile " << index << std::endl;
         exit(1);
     }
-    tileSet.SetClip(column*tileWidth, row*tileHeight, tileSet.GetWidth(), tileSet.GetHeight());
+    tileSet.SetClip(column*tileWidth, row*tileHeight, tileWidth, tileHeight);
     tileSet.RenderToPosition(x, y);
 }
 

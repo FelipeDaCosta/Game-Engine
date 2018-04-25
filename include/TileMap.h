@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "TileSet.h"
 #include "Component.h"
+#include "Camera.h"
 
 class TileMap : public Component{
     public:

@@ -11,6 +11,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 class State {
     private:

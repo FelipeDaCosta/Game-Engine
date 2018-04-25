@@ -83,6 +83,7 @@ void State::Update(float dt) {
 	if(quitRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested()) {
 		quitRequested = true;
 	}
+	Camera::Update(dt);
 	if(InputManager::GetInstance().KeyPress(SPACE_KEY)) {
 		int mouseX = InputManager::GetInstance().GetMouseX();
 		int mouseY = InputManager::GetInstance().GetMouseY();
@@ -105,7 +106,7 @@ void State::Render() {
 
 void State::AddObject(int mouseX, int mouseY) {
     GameObject* go = new GameObject();
-	go->box.SetPosition((float) mouseX,(float) mouseY);
+	go->box.SetPosition((float) mouseX + Camera::pos.x,(float) mouseY + Camera::pos.y);
     go->AddComponent(new Sprite(*go, "./assets/img/penguinface.png"));
     go->AddComponent(new Sound(*go, "./assets/audio/boom.wav"));
 	go->AddComponent(new Face(*go));

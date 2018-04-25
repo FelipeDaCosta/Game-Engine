@@ -44,7 +44,7 @@ void Sprite::RenderToPosition(float x, float y) {
 }
 
 void Sprite::Render() {
-    RenderToPosition(associated.box.x, associated.box.y);
+    RenderToPosition(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
 bool Sprite::Is(std::string type) {

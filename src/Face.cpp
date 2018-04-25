@@ -21,9 +21,9 @@ void Face::Damage(int damage) {
 
 void Face::Update(float dt) {
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        int mouseX = InputManager::GetInstance().GetMouseX();
-        int mouseY = InputManager::GetInstance().GetMouseY();
-        if(associated.box.Contains((float) mouseX, (float) mouseY)) {
+        float mouseX = InputManager::GetInstance().GetMouseX() + Camera::pos.x;
+        float mouseY = InputManager::GetInstance().GetMouseY() + Camera::pos.y;
+        if(associated.box.Contains(mouseX, mouseY)) {
             this->Damage(std::rand() % 10 + 10);
         }
     }

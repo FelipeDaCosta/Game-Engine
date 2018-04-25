@@ -17,3 +17,8 @@ Vec2 Vec2::Sum(Vec2 vec) {
     y = y + vec.y;
     return *this;
 }
+
+void Vec2::setValues(float x, float y) {
+    this->x = x;
+    this->y = x;
+}

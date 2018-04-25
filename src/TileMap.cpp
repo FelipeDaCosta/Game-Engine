@@ -47,8 +47,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
     float x, y;
     for(int i = 0; i < GetWidth(); i++) {
         for(int j = 0; j < GetHeight(); j++) {
-            x = i*tileSet->GetTileWidth();
-            y = j*tileSet->GetTileHeight();
+            x = i*tileSet->GetTileWidth() - cameraX;
+            y = j*tileSet->GetTileHeight() - cameraY;
             int& index = At(i, j, layer);
             if(!run_once)
                 std::cout <<  index << ", ";
@@ -64,7 +64,7 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
 
 void TileMap::Render() {
     for(int i = 0; i < GetDepth(); i++) {
-        RenderLayer(i, 0, 0);
+        RenderLayer(i, Camera::pos.x, Camera::pos.y);
     }
 }
 

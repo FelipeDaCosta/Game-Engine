@@ -6,7 +6,7 @@ Game* Game::instance = nullptr;
 
 Game& Game::GetInstance() {
     if(instance == nullptr) {
-        instance = new Game("Felipe da Costa Malaquias 13/0044440", 1024, 600);
+        instance = new Game("Felipe da Costa Malaquias 13/0044440", SCREEN_WIDTH, SCREEN_HEIGHT);
     }
     return *instance;
 }
@@ -53,6 +53,9 @@ Game::Game(std::string title, int width, int height) {
         std::cout << "Falha no SDL_CreateRenderer: " << SDL_GetError() << std::endl;
         exit(-1);
     }
+
+    dt = 0;
+    frameStart = 0;
 }
 
 Game::~Game() {
@@ -75,8 +78,9 @@ SDL_Renderer* Game::GetRenderer() {
 void Game::Run() {
     state = new State();
     while(state->QuitRequested() == false) {
+        CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        state->Update(0);
+        state->Update(GetDeltaTime());
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
@@ -84,4 +88,14 @@ void Game::Run() {
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+}
+
+void Game::CalculateDeltaTime() {
+    uint32_t time = SDL_GetTicks();
+    dt = (time - frameStart)/1000.0;
+    frameStart = time;
+}
+
+float Game::GetDeltaTime() {
+    return dt;
 }

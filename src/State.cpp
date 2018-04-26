@@ -5,6 +5,7 @@ const float PI = 3.141592643589;
 State::State() : music("./assets/audio/stageState.ogg"){
 	GameObject *go_sprite = new GameObject();
 	go_sprite->AddComponent(new Sprite(*go_sprite, "./assets/img/ocean.jpg"));
+	go_sprite->AddComponent(new CameraFollower(*go_sprite));
 	objectArray.emplace_back(go_sprite);
 
 	GameObject *go_map = new GameObject();

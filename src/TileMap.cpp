@@ -45,10 +45,11 @@ int& TileMap::At(int x, int y, int z) {
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
     float x, y;
+    float parallax = 0.3*layer;
     for(int i = 0; i < GetWidth(); i++) {
         for(int j = 0; j < GetHeight(); j++) {
-            x = i*tileSet->GetTileWidth() - cameraX;
-            y = j*tileSet->GetTileHeight() - cameraY;
+            x = i*tileSet->GetTileWidth() - cameraX - parallax*Camera::pos.x;
+            y = j*tileSet->GetTileHeight() - cameraY - parallax*Camera::pos.y;
             int& index = At(i, j, layer);
             if(!run_once)
                 std::cout <<  index << ", ";

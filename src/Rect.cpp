@@ -16,3 +16,8 @@ void Rect::SetPosition(float positionX, float positionY) {
     x = positionX;
     y = positionY;
 }
+
+void Rect::SumVec2(Vec2 v) {
+    x += v.x;
+    y += v.y;
+}

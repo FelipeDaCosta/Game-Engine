@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include "Vec2.h"
 
 class Rect {
     public:
@@ -14,6 +15,7 @@ class Rect {
         Rect(float x, float y, float w, float h);
         void SetPosition(float x, float y);
         bool Contains(float x, float y);
+        void SumVec2(Vec2 v);
     private:
 };
 

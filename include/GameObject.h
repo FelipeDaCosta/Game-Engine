@@ -19,6 +19,8 @@ class GameObject {
         void RemoveComponent(Component* cpt);
         Component* GetComponent(std::string type);
         Rect box;
+        void Start();
+        bool started;
     private:
         std::vector<Component*> components;
         bool isDead;

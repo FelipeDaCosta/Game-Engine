@@ -7,8 +7,10 @@ Vec2::Vec2(float startingX, float startingY) : x(startingX), y(startingY){
 }
 
 Vec2 Vec2::GetRotated(float angle) {
-    x = x*cos(angle) - y*sin(angle);
-    y = y*cos(angle) + x*sin(angle);
+    float oldX = x;
+    float oldY = y;
+    x = oldX*cos(angle) - oldY*sin(angle);
+    y = oldY*cos(angle) + oldX*sin(angle);
     return *this;
 }
 
@@ -18,7 +20,15 @@ Vec2 Vec2::Sum(Vec2 vec) {
     return *this;
 }
 
+Vec2 Vec2::Mult(float c) {
+    return Vec2(x*c, y*c);
+}
+
 void Vec2::setValues(float x, float y) {
     this->x = x;
     this->y = x;
+}
+
+float Vec2::Magnitude() {
+    return sqrtf(x*x + y*y);
 }

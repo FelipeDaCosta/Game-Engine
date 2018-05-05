@@ -21,3 +21,7 @@ void Rect::SumVec2(Vec2 v) {
     x += v.x;
     y += v.y;
 }
+
+Vec2 Rect::Center() {
+    return Vec2(x + w/2, y + h/2);
+}

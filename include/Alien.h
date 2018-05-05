@@ -6,12 +6,15 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <cstdlib>
 #include "Sprite.h"
 #include "Component.h"
 #include "GameObject.h"
 #include "Vec2.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "Minion.h"
+#include "Bullet.h"
 
 class Alien : public Component {
     public:

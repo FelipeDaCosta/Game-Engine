@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <iostream>
 #define INCLUDE_SDL
 #include "SDL_include.h"
 #include "Component.h"
@@ -16,6 +17,7 @@ class Sprite : public Component{
         int width;
         int height;
         SDL_Rect clipRect;
+        Vec2 scale;
     public:
         Sprite(GameObject& associated);
         Sprite(GameObject& associated, std::string file);
@@ -29,6 +31,8 @@ class Sprite : public Component{
         bool IsOpen();
         void Update(float dt);
         bool Is(std::string type);
+        void SetScaleX(float scaleX, float scaleY);
+        Vec2 GetScale();
 };
 
 #endif

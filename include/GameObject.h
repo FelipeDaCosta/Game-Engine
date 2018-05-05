@@ -21,6 +21,7 @@ class GameObject {
         Rect box;
         void Start();
         bool started;
+        double angleDeg;
     private:
         std::vector<Component*> components;
         bool isDead;

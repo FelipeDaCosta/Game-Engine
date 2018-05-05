@@ -12,6 +12,8 @@ class Vec2 {
         Vec2 GetRotated(float angle);
         Vec2 Sum(Vec2 vec);
         void setValues(float x, float y);
+        float Magnitude();
+        Vec2 Mult(float c);
 };
 
 #endif

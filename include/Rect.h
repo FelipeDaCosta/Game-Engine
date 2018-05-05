@@ -16,6 +16,7 @@ class Rect {
         void SetPosition(float x, float y);
         bool Contains(float x, float y);
         void SumVec2(Vec2 v);
+        Vec2 Center();
     private:
 };
 

@@ -61,6 +61,7 @@ void State::Update(float dt) {
 		AddObject(AddFace(mouseX, mouseY));
 	}
     for(unsigned int i = 0; i < objectArray.size(); i++) {
+		
         objectArray[i]->Update(dt);
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
@@ -76,7 +77,7 @@ void State::Render() {
 
 std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
 	std::shared_ptr<GameObject> goPtr(go);
-	objectArray.push_back(goPtr);
+	objectArray.emplace_back(goPtr);
 	if(started) {
 		goPtr->Start();
 	}
@@ -85,13 +86,12 @@ std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
 }
 
 std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
-	std::weak_ptr<GameObject> returnPtr;
 	for(int i = 0; i < objectArray.size(); i++) {
 		if(objectArray[i].get() == go) {
-			returnPtr = objectArray[i];
+			return std::weak_ptr<GameObject>(objectArray[i]);
 		}
 	}
-	return returnPtr;
+	return std::weak_ptr<GameObject>();
 }
 
 bool State::QuitRequested() {

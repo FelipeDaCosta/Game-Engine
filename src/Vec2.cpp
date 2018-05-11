@@ -32,3 +32,19 @@ void Vec2::setValues(float x, float y) {
 float Vec2::Magnitude() {
     return sqrtf(x*x + y*y);
 }
+
+Vec2 Vec2::operator+ (Vec2 const &obj) {
+    return Vec2(obj.x + x, obj.y + y);
+}
+
+Vec2 Vec2::operator- (Vec2 const &obj) {
+    return Vec2(obj.x - x, obj.y - y);
+}
+
+Vec2 Vec2::operator* (float const f) {
+    return Vec2(x*f, y*f);
+}
+
+Vec2 Vec2::operator* (float const f) const {
+    return Vec2(x*f, y*f);
+}

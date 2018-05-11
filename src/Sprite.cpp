@@ -6,7 +6,7 @@ Sprite::Sprite(GameObject& associated) : Component(associated), scale(1, 1) {
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1) : Component(associated), scale(1, 1) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime) : Component(associated), scale(1, 1) {
     texture = nullptr;
     this->frameCount = frameCount;
     this->frameTime = frameTime;

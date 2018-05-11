@@ -7,6 +7,8 @@
 #include "Component.h"
 #include "Rect.h"
 #include "Vec2.h"
+#include "Game.h"
+#include "Camera.h"
 
 class Collider : public Component {
     public:

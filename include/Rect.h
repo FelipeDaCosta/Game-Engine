@@ -7,12 +7,12 @@
 
 class Rect {
     public:
+        Rect(); // Inicializa tudo 0
+        Rect(float x, float y, float w, float h);
         float x;
         float y;
         float w;
         float h;
-        Rect(); // Inicializa tudo 0
-        Rect(float x, float y, float w, float h);
         void SetPosition(float x, float y);
         bool Contains(float x, float y);
         void SumVec2(Vec2 v);

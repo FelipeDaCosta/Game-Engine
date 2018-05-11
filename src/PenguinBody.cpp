@@ -9,7 +9,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
         new_angle = 0;
         hp = 100;
         player = this;
-        Sprite *sprite = new Sprite(associated, "./assets/img/penguin.png", 1, 1);
+        Sprite *sprite = new Sprite(associated, "./assets/img/penguin.png");
         associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
         associated.AddComponent(sprite);
 }
@@ -32,6 +32,7 @@ void PenguinBody::Update(float dt) {
     float STOP_ACCEL = 0.5;
 
     if(hp <= 0) {
+        Camera::Unfollow();
         associated.RequestDelete();
     }
 
@@ -77,4 +78,10 @@ void PenguinBody::Render() {
 
 bool PenguinBody::Is(std::string type) {
     return type == "PenguinBody";
+}
+
+void PenguinBody::NotifyCollision(GameObject& other) {
+    Bullet *bul = (Bullet *) other.GetComponent("Bullet");
+    if(bul != nullptr && bul->targetsPlayer)
+        std::cout << "Colidiu!" << std::endl;
 }

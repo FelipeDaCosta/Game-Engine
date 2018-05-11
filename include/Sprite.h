@@ -24,7 +24,7 @@ class Sprite : public Component{
         float timeElapsed;
     public:
         Sprite(GameObject& associated);
-        Sprite(GameObject& associated, std::string file, int frameCount, float frameTime);
+        Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1);
         ~Sprite();
         void Open(std::string file);
         void SetClip(int x, int y, int w, int h);

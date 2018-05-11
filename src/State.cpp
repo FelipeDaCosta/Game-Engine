@@ -2,14 +2,6 @@
 
 const float PI = 3.141592643589;
 
-GameObject* AddFace(int mouseX, int mouseY) {
-    GameObject* go = new GameObject();
-	go->box.SetPosition((float) mouseX + Camera::pos.x,(float) mouseY + Camera::pos.y);
-    go->AddComponent(new Sprite(*go, "./assets/img/penguinface.png", 1, 1));
-    go->AddComponent(new Sound(*go, "./assets/audio/boom.wav"));
-	go->AddComponent(new Face(*go));
-	return go;
-}
 
 State::State() : music("./assets/audio/stageState.ogg"), started(false) {
 	GameObject *go_sprite = new GameObject();
@@ -24,15 +16,17 @@ State::State() : music("./assets/audio/stageState.ogg"), started(false) {
 	go_map->box.SetPosition(0, 0);
 	objectArray.emplace_back(go_map);
 
-	/*GameObject * go_alien = new GameObject();
+	GameObject * go_alien = new GameObject();
 	go_alien->AddComponent(new Alien(*go_alien, 10));
 	go_alien->box.SetPosition(512, 300);
-	objectArray.emplace_back(go_alien);*/
+	objectArray.emplace_back(go_alien);
 
 	GameObject *go_player = new GameObject();
 	go_player->AddComponent(new PenguinBody(*go_player));
-	go_player->box.SetPosition(512, 300);
+	go_player->box.SetPosition(0, 0);
 	objectArray.emplace_back(go_player);
+
+	Camera::Follow(go_player);
 
 	quitRequested = false;
     music.Play(-1);
@@ -60,19 +54,35 @@ void State::Update(float dt) {
 	}
 	Camera::Update(dt);
 	if(InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-		int mouseX = InputManager::GetInstance().GetMouseX();
-		int mouseY = InputManager::GetInstance().GetMouseY();
-		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ).Sum(Vec2(mouseX, mouseY));
-		AddObject(AddFace(mouseX, mouseY));
+		std::cout << "AAA" << std::endl;
 	}
     for(unsigned int i = 0; i < objectArray.size(); i++) {
 		
         objectArray[i]->Update(dt);
         if(objectArray[i]->IsDead()) {
-            objectArray.erase(objectArray.begin() + i);
+           objectArray.erase(objectArray.begin() + i);
         }
+
+		// Collision
+		for(unsigned int j = i+1; j < objectArray.size(); j++) {
+			GameObject& go1 = *objectArray[i];
+			GameObject& go2 = *objectArray[j];
+
+			Collider* col1 = (Collider*) go1.GetComponent("Collider");
+			Collider* col2 = (Collider*) go2.GetComponent("Collider");
+
+			if(col1 != nullptr && col2 != nullptr) {
+				if(Collision::IsColliding(col1->box, col2->box, go1.angleDeg, go2.angleDeg)) {
+					objectArray[i]->NotifyCollision(*objectArray[j]);
+					objectArray[j]->NotifyCollision(*objectArray[i]);
+				}
+			}
+		}
     }
 }
+
+
+
 
 void State::Render() {
     for(unsigned int i = 0; i < objectArray.size(); i++) {

@@ -5,8 +5,8 @@ Minion::Minion(GameObject& associated,
                ) : Component(associated), alienCenter(*alienCenter.lock()) {
     this->arc = arcOffSetDeg;
     float randScale = ((0.5) * (rand()/(float)RAND_MAX)) + 1.0;
-    Sprite *sprite = new Sprite(associated, "./assets/img/minion.png", 1, 1);
-    associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
+    Sprite *sprite = new Sprite(associated, "./assets/img/minion.png");
+    //associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
     sprite->SetScaleX(randScale, randScale);
     associated.AddComponent(sprite);
     associated.angleDeg = arc;

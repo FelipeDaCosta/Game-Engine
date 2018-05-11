@@ -1,7 +1,7 @@
 #include "../include/Alien.h"
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated) {
-    associated.AddComponent(new Sprite(associated, "./assets/img/alien.png", 1, 1));
+    associated.AddComponent(new Sprite(associated, "./assets/img/alien.png"));
     associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
     hp = 100;
     speed = Vec2(0, 0);
@@ -27,6 +27,13 @@ Alien::~Alien() {
 }
 
 void Alien::Update(float dt) {
+    if(hp <= 0) {
+        for(int i = 0; i < minionArray.size(); i++) {
+            minionArray[i].lock()->RequestDelete();
+        }
+        minionArray.clear();
+        this->associated.RequestDelete();
+    }
     associated.angleDeg -= 2;
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
         taskQueue.push(* (new Action(Action::SHOOT,
@@ -82,4 +89,13 @@ bool Alien::Is(std::string type) {
 Alien::Action::Action(Alien::Action::ActionType type, float x, float y) {
     this->type = type;
     pos = Vec2(x, y);
+}
+
+void Alien::NotifyCollision(GameObject& other) {
+    Bullet *bul = (Bullet *) other.GetComponent("Bullet");
+    if(bul != nullptr && !bul->targetsPlayer) {
+        std::cout << "ATACOU ALIEN! ";
+        hp -= bul->GetDamage();
+        std::cout << "HP: " << hp << std::endl;
+    }
 }

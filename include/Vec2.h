@@ -14,6 +14,10 @@ class Vec2 {
         void setValues(float x, float y);
         float Magnitude();
         Vec2 Mult(float c);
+        Vec2 operator+ (Vec2 const &obj);
+        Vec2 operator- (Vec2 const &obj);
+        Vec2 operator* (float const f);
+        Vec2 operator* (float const f) const;
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include "Sprite.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Collider.h"
 
 class Minion : public Component{
     public:

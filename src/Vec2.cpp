@@ -26,7 +26,7 @@ Vec2 Vec2::Mult(float c) {
 
 void Vec2::setValues(float x, float y) {
     this->x = x;
-    this->y = x;
+    this->y = y;
 }
 
 float Vec2::Magnitude() {

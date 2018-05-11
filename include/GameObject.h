@@ -22,6 +22,8 @@ class GameObject {
         void Start();
         bool started;
         double angleDeg;
+        void NotifyCollision(GameObject& other);
+        
     private:
         std::vector<Component*> components;
         bool isDead;

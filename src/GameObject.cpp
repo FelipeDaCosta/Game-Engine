@@ -38,10 +38,7 @@ bool GameObject::IsDead() {
 }
 
 void GameObject::RequestDelete() {
-    Sound* finalSound = (Sound*) GetComponent("Sound");
-    if(finalSound != nullptr && !finalSound->IsPlaying()) {
-        isDead = true; // Play final sound
-    }
+    isDead = true;
 }
 
 void GameObject::AddComponent(Component * cpt) {

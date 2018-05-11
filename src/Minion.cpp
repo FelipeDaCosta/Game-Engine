@@ -5,7 +5,8 @@ Minion::Minion(GameObject& associated,
                ) : Component(associated), alienCenter(*alienCenter.lock()) {
     this->arc = arcOffSetDeg;
     float randScale = ((0.5) * (rand()/(float)RAND_MAX)) + 1.0;
-    Sprite *sprite = new Sprite(associated, "./assets/img/minion.png");
+    Sprite *sprite = new Sprite(associated, "./assets/img/minion.png", 1, 1);
+    associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
     sprite->SetScaleX(randScale, randScale);
     associated.AddComponent(sprite);
     associated.angleDeg = arc;
@@ -35,7 +36,7 @@ void Minion::Shoot(Vec2 target) {
     bulletGo->box.x = associated.box.Center().x;
     bulletGo->box.y = associated.box.Center().y;
     float angle = atan2(target.y - bulletGo->box.Center().y, target.x - bulletGo->box.Center().x);
-    Bullet *bul = new Bullet(*bulletGo, angle, 300, 10, 200, "./assets/img/minionbullet1.png");
+    Bullet *bul = new Bullet(*bulletGo, angle, 300, 10, 200, "./assets/img/minionbullet2.png");
     bulletGo->angleDeg = angle*180/3.14;
     bulletGo->AddComponent(bul);
     Game::GetInstance().GetState().AddObject(bulletGo);

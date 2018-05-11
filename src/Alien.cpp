@@ -1,7 +1,8 @@
 #include "../include/Alien.h"
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated) {
-    associated.AddComponent(new Sprite(associated, "./assets/img/alien.png"));
+    associated.AddComponent(new Sprite(associated, "./assets/img/alien.png", 1, 1));
+    associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
     hp = 100;
     speed = Vec2(0, 0);
     minionArray.resize(nMinions);

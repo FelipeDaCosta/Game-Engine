@@ -6,8 +6,10 @@ Sprite::Sprite(GameObject& associated) : Component(associated), scale(1, 1) {
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject& associated, std::string file) : Component(associated), scale(1, 1) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1) : Component(associated), scale(1, 1) {
     texture = nullptr;
+    this->frameCount = frameCount;
+    this->frameTime = frameTime;
     Open(file);
 }
 
@@ -20,7 +22,7 @@ void Sprite::Open(std::string file) {
     if(SDL_QueryTexture(texture, nullptr, nullptr, &width, &height) != 0) {
         std::cout << "Erro no SDL_QueryTexture: " << SDL_GetError() << std::endl;
     }
-    SetClip(0, 0, width, height);
+    SetClip(0, 0, width/frameCount, height);
     associated.box.w = width;
     associated.box.h = height;
 }
@@ -53,10 +55,34 @@ bool Sprite::Is(std::string type) {
 }
 
 void Sprite::Update(float dt) {
+    timeElapsed += dt;
+    if(timeElapsed >= frameTime) {
+        timeElapsed = 0;
+        currentFrame++;
+        if(currentFrame >= frameCount) {
+            currentFrame = 0;
+        }
+        SetFrame(currentFrame);
+    }
+}
+
+void Sprite::SetFrame(int frame) {
+    currentFrame = frame;
+    associated.box.w = GetWidth();
+    SetClip(GetWidth() * frame, 0, clipRect.w, clipRect.h);
+}
+
+void Sprite::SetFrameCount(int frameCount) {
+    this->frameCount = frameCount;
+    SetFrame(0);
+}
+
+void Sprite::SetFrameTime(float frameTime) {
+    this->frameTime = frameTime;
 }
 
 int Sprite::GetWidth() {
-    return width*scale.x;
+    return width*scale.x/frameCount;
 }
 
 int Sprite::GetHeight() {

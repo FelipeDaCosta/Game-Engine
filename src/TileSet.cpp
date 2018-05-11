@@ -1,6 +1,6 @@
 #include "../include/TileSet.h"
 
-TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file) : tileSet(associated, file) {
+TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, std::string file) : tileSet(associated, file, 1, 1) {
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
     if(!tileSet.IsOpen()) {

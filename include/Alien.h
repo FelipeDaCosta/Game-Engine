@@ -15,6 +15,7 @@
 #include "Camera.h"
 #include "Minion.h"
 #include "Bullet.h"
+#include "Collider.h"
 
 class Alien : public Component {
     public:

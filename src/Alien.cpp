@@ -32,6 +32,7 @@ Alien::~Alien() {
 }
 
 void Alien::Update(float dt) {
+    float REST_CD = 5;
     if(hp <= 0) {
         GameObject *goBoom = new GameObject();
         Sprite *boomSprite = new Sprite(*goBoom, "./assets/img/aliendeath.png", 4, 0.2f, 0.8f);
@@ -52,46 +53,40 @@ void Alien::Update(float dt) {
     }
 
     associated.angleDeg -= 2;
-    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        taskQueue.push(* (new Action(Action::SHOOT,
-                            InputManager::GetInstance().GetMouseX() + Camera::pos.x,
-                            InputManager::GetInstance().GetMouseY() + Camera::pos.y)));
-    }
-    if(InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)) {
-        taskQueue.push(* (new Action(Action::MOVE,
-                    InputManager::GetInstance().GetMouseX() + Camera::pos.x,
-                    InputManager::GetInstance().GetMouseY() + Camera::pos.y)));
-    }
 
-    if(!taskQueue.empty()) {
-        Action act = taskQueue.front();
-        if(act.type == Action::MOVE) {
-            float VELOCITY = 5.0;
-            float xDiff = act.pos.x - associated.box.x;
-            float yDiff = act.pos.y - associated.box.y;
-
-            float angle = atan2(yDiff, xDiff);
-
-            float xInc = (float)cos(angle)*VELOCITY;
-            float yInc = (float)sin(angle)*VELOCITY;
-            if(sqrtf(xDiff*xDiff + yDiff*yDiff) < sqrtf(xInc*xInc + yInc*yInc)) {
-                xInc = xDiff;
-                yInc = yDiff;
-                taskQueue.pop();
-            }
-            associated.box.x += xInc;
-            associated.box.y += yInc;
+    if(state == RESTING) {
+        restTimer.Update(dt);
+        if(restTimer.Get() > REST_CD) {
+            destination = PenguinBody::player->GetPosition();
+            state = MOVING;
         }
-        else {
+    }
+    else if(state == MOVING) {
+        float VELOCITY = 5.0;
+        float xDiff = destination.x - associated.box.x;
+        float yDiff = destination.y - associated.box.y;
+
+        float angle = atan2(yDiff, xDiff);
+
+        float xInc = (float)cos(angle)*VELOCITY;
+        float yInc = (float)sin(angle)*VELOCITY;
+        if(sqrtf(xDiff*xDiff + yDiff*yDiff) < sqrtf(xInc*xInc + yInc*yInc)) {
+            xInc = xDiff;
+            yInc = yDiff;
             std::shared_ptr<GameObject> minionGo = minionArray[rand()%minionArray.size()].lock();
             Minion* minion = (Minion*)minionGo->GetComponent("Minion");
             if(minion == nullptr) {
                 std::cout << "Nao foi possivel encontrar um Minion para atirar" << std::endl;
                 exit(-1);
             }
-            minion->Shoot(act.pos);
-            taskQueue.pop();
+            minion->Shoot(destination);
+            state = RESTING;
+            restTimer.Restart();
         }
+        speed = Vec2(xInc, yInc);
+        
+        associated.box.x += speed.x;
+        associated.box.y += speed.y;
     }
 }
 
@@ -103,10 +98,6 @@ bool Alien::Is(std::string type) {
     return type == "Alien";
 }
 
-Alien::Action::Action(Alien::Action::ActionType type, float x, float y) {
-    this->type = type;
-    pos = Vec2(x, y);
-}
 
 void Alien::NotifyCollision(GameObject& other) {
     Bullet *bul = (Bullet *) other.GetComponent("Bullet");

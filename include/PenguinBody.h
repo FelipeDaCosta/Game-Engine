@@ -19,7 +19,7 @@ class PenguinBody : public Component {
         void Update(float dt);
         void Render();
         bool Is(std::string type);
-
+        Vec2 GetPosition();
         static PenguinBody* player;
         void NotifyCollision(GameObject& other);
         int hp;

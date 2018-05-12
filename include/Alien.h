@@ -17,6 +17,7 @@
 #include "Collider.h"
 #include "Sprite.h"
 #include "Timer.h"
+#include "PenguinBody.h"
 
 class Alien : public Component {
     public:
@@ -33,16 +34,8 @@ class Alien : public Component {
         AlienState state;
         Timer restTimer;
         Vec2 destination;
-        class Action {
-            public:
-                enum ActionType {MOVE, SHOOT};
-                Action(ActionType type, float x, float y);
-                ActionType type;
-                Vec2 pos;
-        };
         Vec2 speed;
         int hp;
-        std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
 };
 

@@ -25,6 +25,10 @@ void PenguinBody::Start() {
     pcannon = Game::GetInstance().GetInstance().GetState().GetObjectPtr(cannonGO);
 }
 
+Vec2 PenguinBody::GetPosition() {
+    return associated.box.Center();
+}
+
 void PenguinBody::Update(float dt) {
     float MAX_SPEED = 10;
     float ACCEL_LINEAR = 2;

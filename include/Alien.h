@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
-#include "Sprite.h"
 #include "Component.h"
 #include "GameObject.h"
 #include "Vec2.h"
@@ -16,6 +15,8 @@
 #include "Minion.h"
 #include "Bullet.h"
 #include "Collider.h"
+#include "Sprite.h"
+#include "Timer.h"
 
 class Alien : public Component {
     public:
@@ -26,7 +27,12 @@ class Alien : public Component {
         void Render();
         bool Is(std::string type);
         void NotifyCollision(GameObject& other);
+        static int alienCount;
     private:
+        enum AlienState {MOVING, RESTING};
+        AlienState state;
+        Timer restTimer;
+        Vec2 destination;
         class Action {
             public:
                 enum ActionType {MOVE, SHOOT};

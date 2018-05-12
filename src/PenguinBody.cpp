@@ -32,7 +32,19 @@ void PenguinBody::Update(float dt) {
     float STOP_ACCEL = 0.5;
 
     if(hp <= 0) {
+        GameObject *goBoom = new GameObject();
+        Sprite *boomSprite = new Sprite(*goBoom, "./assets/img/penguindeath.png", 5, 0.2f, 1);
+        goBoom->AddComponent(boomSprite);
+        goBoom->box.x = associated.box.x;
+        goBoom->box.y = associated.box.y;
+
+        Sound *boomSound = new Sound(*goBoom, "./assets/audio/boom.wav");
+        goBoom->AddComponent(boomSound);
+        boomSound->Play(1);
+        Game::GetInstance().GetState().AddObject(goBoom);
+
         Camera::Unfollow();
+        pcannon.lock()->RequestDelete();
         associated.RequestDelete();
     }
 

@@ -22,6 +22,7 @@ class PenguinBody : public Component {
 
         static PenguinBody* player;
         void NotifyCollision(GameObject& other);
+        int hp;
 
     private:
         std::weak_ptr<GameObject> pcannon;
@@ -29,7 +30,7 @@ class PenguinBody : public Component {
         float linearSpeed;
         float angle;
         float new_angle; // Auxilio para so mudar o angulo quando acelerar
-        int hp;
+        
 };
 
 #endif

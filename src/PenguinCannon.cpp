@@ -5,6 +5,8 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
     Sprite *sprite = new Sprite(associated, "./assets/img/cubngun.png");
     associated.AddComponent(new Collider(associated, Vec2(1, 1), Vec2(0, 0)));
     associated.AddComponent(sprite);
+    shootCooldown = Timer();
+    shootCooldown.Update(1); // Ja comeca podendo atirar
 }
 
 PenguinCannon::~PenguinCannon() {
@@ -12,6 +14,7 @@ PenguinCannon::~PenguinCannon() {
 }
 
 void PenguinCannon::Update(float dt) {
+    shootCooldown.Update(dt);
     if(pbody.lock() != nullptr) {
         associated.box.x = pbody.lock()->box.x;
         associated.box.y = pbody.lock()->box.y;
@@ -19,8 +22,9 @@ void PenguinCannon::Update(float dt) {
         angle = atan2(InputManager::GetInstance().GetMouseY() + Camera::pos.y - associated.box.y,
                       InputManager::GetInstance().GetMouseX() + Camera::pos.x - associated.box.x);
         associated.angleDeg = angle*180/3.14;
-        if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON) && shootCooldown.Get() > 0.5) {
             Shoot();
+            shootCooldown.Restart();
         }
     }
     else {

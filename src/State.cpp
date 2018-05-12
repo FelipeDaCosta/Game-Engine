@@ -2,6 +2,7 @@
 
 const float PI = 3.141592643589;
 
+PenguinBody *pbody = nullptr;
 
 State::State() : music("./assets/audio/stageState.ogg"), started(false) {
 	GameObject *go_sprite = new GameObject();
@@ -22,7 +23,8 @@ State::State() : music("./assets/audio/stageState.ogg"), started(false) {
 	objectArray.emplace_back(go_alien);
 
 	GameObject *go_player = new GameObject();
-	go_player->AddComponent(new PenguinBody(*go_player));
+	pbody = new PenguinBody(*go_player);
+	go_player->AddComponent(pbody);
 	go_player->box.SetPosition(0, 0);
 	objectArray.emplace_back(go_player);
 
@@ -54,7 +56,7 @@ void State::Update(float dt) {
 	}
 	Camera::Update(dt);
 	if(InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-		std::cout << "AAA" << std::endl;
+		pbody->hp = 0;
 	}
     for(unsigned int i = 0; i < objectArray.size(); i++) {
 		

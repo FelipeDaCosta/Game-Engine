@@ -16,7 +16,7 @@ void Minion::Update(float dt) {
     float VELOCITY = 3.14/2;
     arc += VELOCITY*dt;
     Vec2 dOrig = Vec2(200, 0).GetRotated(arc).Sum(alienCenter.box.Center());
-    associated.box.SetPosition(dOrig.x, dOrig.y);
+    associated.box.SetPosition(dOrig.x - associated.box.w/2, dOrig.y- associated.box.h/2);
     associated.angleDeg += (VELOCITY*dt)*180/3.14;
     if(alienCenter.IsDead()) {
         associated.RequestDelete();
